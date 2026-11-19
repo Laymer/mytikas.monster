@@ -1,6 +1,12 @@
 <img width="1280" height="640" alt="mytikas" src="https://github.com/user-attachments/assets/b2d134da-09d1-4997-a14b-804107803fc5" />
 
-# Mytikas local guild application
+# Olympus Mytikas guild website
+
+This repository publishes the guild chronicle and landing page at [mytikas.monster](https://mytikas.monster/). Updates to `main` deploy to GitHub Pages after the required checks pass.
+
+For development of guild accounts, applications, and raid rosters, use [Mytikas-Monster/mytikas](https://github.com/Mytikas-Monster/mytikas). The notes below accompanied the original source when the website moved here.
+
+## Local guild application
 
 See the [illustrated user manual](docs/USER-MANUAL.md) for applicant, staff, and demo walkthroughs.
 
