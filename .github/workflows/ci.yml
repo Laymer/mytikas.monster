@@ -60,6 +60,9 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - name: Prefer the Ubuntu Azure mirror for browser dependencies
+        run: |
+          printf 'https://azure.archive.ubuntu.com/ubuntu/\tpriority:1\n' | sudo tee -a /etc/apt/apt-mirrors.txt
       - run: npx playwright install --with-deps ${{ matrix.browser }}
       - run: npm run test:browser
         env:
