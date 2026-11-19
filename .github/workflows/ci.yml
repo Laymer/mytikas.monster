@@ -47,6 +47,14 @@ jobs:
           retention-days: 7
   browser:
     runs-on: ubuntu-24.04
+    container:
+      # Playwright 1.65.0 Noble, matching package-lock.json.
+      image: mcr.microsoft.com/playwright:v1.65.0-noble@sha256:9beb546099e11f52d62e505537914870e01a67e0e6b00ae41da4775324e73dbe
+      options: --init --shm-size=1g
+    defaults:
+      run:
+        # Embedded PostgreSQL needs an unprivileged process.
+        shell: runuser -u pwuser --preserve-environment -- env HOME=/home/pwuser bash -e {0}
     strategy:
       fail-fast: false
       matrix:
@@ -59,11 +67,11 @@ jobs:
         with:
           node-version: 24
           cache: npm
-      - run: npm ci
-      - name: Prefer the Ubuntu Azure mirror for browser dependencies
+      - name: Install dependencies and give the test user ownership of the checkout
+        shell: bash
         run: |
-          printf 'https://azure.archive.ubuntu.com/ubuntu/\tpriority:1\n' | sudo tee -a /etc/apt/apt-mirrors.txt
-      - run: npx playwright install --with-deps ${{ matrix.browser }}
+          npm ci
+          chown -R pwuser:pwuser "$GITHUB_WORKSPACE"
       - run: npm run test:browser
         env:
           BROWSER: ${{ matrix.browser }}
